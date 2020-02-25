@@ -1,7 +1,3 @@
-from stuff import main_session
-from json_creater import create_json_for_so
-
-
 def create_so_from_sa38(session, json):
     session.StartTransaction(Transaction="sa38")
     session.FindById("wnd[0]/usr/ctxtRS38M-PROGRAMM").text = "YECH_UT_WEB_CREATE_ORDER_JSON"

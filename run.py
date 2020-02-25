@@ -3,7 +3,7 @@ from stuff import main_session
 from json_creater import create_json_for_so
 from sap_create_so import create_so_from_sa38
 
-book = xlrd.open_workbook("C:/Users/s1617/Desktop/sap_excel/data.xlsm")
+book = xlrd.open_workbook("C:/Users/s1618/Desktop/excel_run/data.xlsm")
 sheet = book.sheet_by_name("data")
 
 
@@ -13,10 +13,15 @@ def get_system():
 
 
 def get_order_data():
-    material = int(sheet.cell_value(4, 0))
-    amount = int(sheet.cell_value(4, 1))
-    unit = str(sheet.cell_value(4, 2))
-    return material, amount, unit
+    total_rows = sheet.nrows
+    for i in range(4, total_rows):
+        if not sheet.cell_value(i, 0):
+            break
+        else:
+            material = int(sheet.cell_value(i, 0))
+            amount = int(sheet.cell_value(i, 1))
+            unit = str(sheet.cell_value(i, 2))
+        return material, amount, unit
 
 
 def make_order_data():
@@ -46,4 +51,4 @@ if __name__ == "__main__":
     data = make_order_data()
     for sales_order_data in data["so_list"]:
         json = create_json_for_so(sales_order_data, data["system"], data["B2B"], data["future_day_process"])
-    create_so_from_sa38(data["session"], json)
+        create_so_from_sa38(data["session"], json)
